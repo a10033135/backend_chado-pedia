@@ -10,14 +10,16 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('ChadoContent_MainCate', function (Blueprint $table) {
-            $table->unsignedBigInteger('chado_content_id');
-            $table->unsignedBigInteger('main_cate_id');
+        if (!Schema::hasTable('ChadoContent_MainCate')) {
+            Schema::create('ChadoContent_MainCate', function (Blueprint $table) {
+                $table->unsignedBigInteger('chado_content_id');
+                $table->unsignedBigInteger('main_cate_id');
 
-            $table->primary(['chado_content_id', 'main_cate_id']);
-            $table->foreign('chado_content_id')->references('id')->on('ChadoContent')->onDelete('cascade');
-            $table->foreign('main_cate_id')->references('id')->on('MainCate')->onDelete('cascade');
-        });
+                $table->primary(['chado_content_id', 'main_cate_id']);
+                $table->foreign('chado_content_id')->references('id')->on('ChadoContent')->onDelete('cascade');
+                $table->foreign('main_cate_id')->references('id')->on('MainCate')->onDelete('cascade');
+            });
+        }
     }
 
     /**

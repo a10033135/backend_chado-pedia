@@ -10,19 +10,21 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('SubCate', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('main_cate_id')->nullable();
-            $table->string('title');
-            $table->text('description')->nullable();
-            $table->integer('sort')->default(0);
-            $table->boolean('has_image')->default(false);
-            $table->boolean('enable')->default(true);
-            $table->dateTime('create_time')->nullable();
-            $table->dateTime('update_time')->nullable();
+        if (!Schema::hasTable('SubCate')) {
+            Schema::create('SubCate', function (Blueprint $table) {
+                $table->id();
+                $table->unsignedBigInteger('main_cate_id')->nullable();
+                $table->string('title');
+                $table->text('description')->nullable();
+                $table->integer('sort')->default(0);
+                $table->boolean('has_image')->default(false);
+                $table->boolean('enable')->default(true);
+                $table->dateTime('create_time')->nullable();
+                $table->dateTime('update_time')->nullable();
 
-            $table->foreign('main_cate_id')->references('id')->on('MainCate')->onDelete('set null');
-        });
+                $table->foreign('main_cate_id')->references('id')->on('MainCate')->onDelete('set null');
+            });
+        }
     }
 
     /**

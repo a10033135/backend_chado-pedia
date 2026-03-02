@@ -10,15 +10,17 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('MainCate', function (Blueprint $table) {
-            $table->id();
-            $table->string('title');
-            $table->text('description')->nullable();
-            $table->boolean('has_image')->default(false);
-            $table->boolean('enable')->default(true);
-            $table->dateTime('create_time')->nullable();
-            $table->dateTime('update_time')->nullable();
-        });
+        if (!Schema::hasTable('MainCate')) {
+            Schema::create('MainCate', function (Blueprint $table) {
+                $table->id();
+                $table->string('title');
+                $table->text('description')->nullable();
+                $table->boolean('has_image')->default(false);
+                $table->boolean('enable')->default(true);
+                $table->dateTime('create_time')->nullable();
+                $table->dateTime('update_time')->nullable();
+            });
+        }
     }
 
     /**
