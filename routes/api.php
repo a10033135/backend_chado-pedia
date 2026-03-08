@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExampleController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MainCateController;
 use App\Http\Controllers\SubCateController;
 use App\Http\Controllers\ChadoContentController;
@@ -12,6 +13,11 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::get('/example', [ExampleController::class, 'index']);
+
+// Auth Endpoints
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
 // Public Read-Only Endpoints
 Route::get('/main-cate', [MainCateController::class, 'indexPublic']);
