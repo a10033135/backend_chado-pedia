@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Validation\ValidationException;
@@ -47,8 +46,8 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        // Check user exists, password is correct
-        if (!$user || !Auth::attempt($request->only('email', 'password'))) {
+        // Check user exists and password is correct
+        if (!$user || !Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
                 'email' => ['認證失敗，信箱或密碼錯誤。'],
             ]);
